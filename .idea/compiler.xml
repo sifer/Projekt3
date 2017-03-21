@@ -6,13 +6,11 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
-        <module name="gs-messaging-stomp-websocket" />
+        <module name="projekt3" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
-      <module name="complete_main" target="1.8" />
-      <module name="complete_test" target="1.8" />
-      <module name="gs-messaging-stomp-websocket" target="1.8" />
+      <module name="projekt3" target="1.8" />
     </bytecodeTargetLevel>
   </component>
 </project>
