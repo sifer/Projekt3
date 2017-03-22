@@ -2,10 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/complete.iml" filepath="$PROJECT_DIR$/.idea/modules/complete.iml" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/complete_main.iml" filepath="$PROJECT_DIR$/.idea/modules/complete_main.iml" group="complete" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/complete_test.iml" filepath="$PROJECT_DIR$/.idea/modules/complete_test.iml" group="complete" />
-      <module fileurl="file://$PROJECT_DIR$/gs-messaging-stomp-websocket.iml" filepath="$PROJECT_DIR$/gs-messaging-stomp-websocket.iml" />
+      <module fileurl="file://$PROJECT_DIR$/projekt3.iml" filepath="$PROJECT_DIR$/projekt3.iml" />
     </modules>
   </component>
 </project>
