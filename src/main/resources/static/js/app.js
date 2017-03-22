@@ -26,9 +26,14 @@ function connect() {
             showGreeting(JSON.parse(greeting.body).content);
         });
         stompClient.subscribe('/topic/answers', function (greeting) {
-            console.log("omg this worked");
             showAnswer(JSON.parse(greeting.body).content);
         });
+        stompClient.subscribe('/topic/quiz', function (data){
+            console.log("det här kördes");
+            getQuestion(JSON.parse(data.body).content);
+        })
+        stompClient.send("/app/connect",{}, "connected");
+
     });
 }
 
@@ -47,6 +52,15 @@ function showGreeting(message) {
 }
 function showAnswer(message) {
     $("#otherPlayers").append("<tr><td>" + message + "</td></tr>");
+}
+function getQuestion(data) {
+    console.log(data);
+    var obj = JSON.parse(data);
+    $("#question").html(obj.question);
+    $("th#options1").html(obj.text1);
+    $("th#options2").html(obj.text2);
+    $("th#options3").html(obj.text3);
+    $("th#options4").html(obj.text4);
 }
 function markAnswer(elem){
     $( "table#options th").css("background-color","cornflowerblue");
