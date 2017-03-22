@@ -32,7 +32,8 @@ function connect() {
             showQuestion(JSON.parse(data.body).content);
         })
         stompClient.subscribe('/topic/aliases', function (alias) {
-            showAliasList(JSON.parse(alias.body).content);
+            var a = (alias.body.replace(/[\]"}[{"]/g, '')); 
+            showAliasList(a);
         })
         sendNewAlias(alias);
         stompClient.send("/app/connect",{}, "connected");
@@ -57,7 +58,6 @@ function showAnswer(message) {
     $("#otherPlayers").append("<tr><td>" + message + "</td></tr>");
 }
 function showQuestion(data) {
-    console.log(data);
     var obj = JSON.parse(data);
     $("#question").html(obj.question);
     $("th#options1").html(obj.text1);
@@ -74,10 +74,9 @@ function markAnswer(elem){
 }
 
 function showAliasList(alias) {
-    $("#alias").append("<div>" + alias + "</div>");
+    $("#aliases").html("<div>" + alias + "</div>");
 }
 function sendNewAlias(alias){
-    console.log(alias);
     stompClient.send("/app/alias", {}, alias);
 }
 
