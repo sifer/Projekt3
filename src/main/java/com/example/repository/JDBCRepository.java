@@ -91,13 +91,24 @@ public class JDBCRepository implements QuizRepository{
         return null;
     }
     private Quiz resultSetQuiz(ResultSet resultSet) throws SQLException{
-        return new Quiz(resultSet.getInt(1),resultSet.getString(2),resultSet.getInt(3));
+        return new Quiz(
+                resultSet.getInt(1),
+                resultSet.getString(2),
+                resultSet.getInt(3));
     }
     private Question resultSetQuestion(ResultSet resultSet) throws SQLException{
-        return new Question(resultSet.getInt(1),resultSet.getString(2),resultSet.getString(3),resultSet.getInt(4));
+        return new Question(
+                resultSet.getInt(1),
+                resultSet.getString(2),
+                resultSet.getString(3),
+                resultSet.getInt(4));
     }
     private Answer resultSetAnswer(ResultSet resultSet) throws SQLException{
-        return new Answer(resultSet.getInt(1),resultSet.getString(2),resultSet.getInt(3),resultSet.getInt(4));
+        return new Answer(
+                resultSet.getInt(1),
+                resultSet.getString(2),
+                resultSet.getInt(3),
+                resultSet.getInt(4));
     }
     private User resultSetUser(ResultSet resultSet) throws SQLException{
         return new User(resultSet.getInt(1), resultSet.getString(2),resultSet.getString(3));

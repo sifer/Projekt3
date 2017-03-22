@@ -16,7 +16,6 @@ function connect() {
     alias = $("#alias").val();
     $("#login-content").hide();
     $("#options").show();
-    console.log("Alias is: "+alias);
     var socket = new SockJS('/gs-guide-websocket');
     stompClient = Stomp.over(socket);
     stompClient.connect({}, function (frame) {
@@ -30,8 +29,12 @@ function connect() {
         });
         stompClient.subscribe('/topic/quiz', function (data){
             console.log("det här kördes");
-            getQuestion(JSON.parse(data.body).content);
+            showQuestion(JSON.parse(data.body).content);
         })
+        stompClient.subscribe('/topic/aliases', function (alias) {
+            showAliasList(JSON.parse(alias.body).content);
+        })
+        sendNewAlias(alias);
         stompClient.send("/app/connect",{}, "connected");
 
     });
@@ -53,7 +56,7 @@ function showGreeting(message) {
 function showAnswer(message) {
     $("#otherPlayers").append("<tr><td>" + message + "</td></tr>");
 }
-function getQuestion(data) {
+function showQuestion(data) {
     console.log(data);
     var obj = JSON.parse(data);
     $("#question").html(obj.question);
@@ -61,6 +64,7 @@ function getQuestion(data) {
     $("th#options2").html(obj.text2);
     $("th#options3").html(obj.text3);
     $("th#options4").html(obj.text4);
+    $("#image").attr("src", obj.img_URL);
 }
 function markAnswer(elem){
     $( "table#options th").css("background-color","cornflowerblue");
@@ -69,14 +73,23 @@ function markAnswer(elem){
     stompClient.send("/app/answer", {}, JSON.stringify({'optionSelected': sendVar, 'playerAlias': alias}));
 }
 
+function showAliasList(alias) {
+    $("#alias").append("<div>" + alias + "</div>");
+}
+function sendNewAlias(alias){
+    console.log(alias);
+    stompClient.send("/app/alias", {}, alias);
+}
+
 $(function () {
     $("form").on('submit', function (e) {
         e.preventDefault();
     });
-    $( "#connect" ).click(function() { connect(); });
+    $( "#connect" ).click(function() { connect()});
     $( "#disconnect" ).click(function() { disconnect(); });
     $( "#send" ).click(function() { sendName(); });
     $( "table#options th" ).click(function() { markAnswer($(this)); });
 
 });
+
 
