@@ -20,6 +20,11 @@ import java.util.List;
  */
 @Component
 public class JDBCRepository implements QuizRepository{
+
+    int numberOfConnections = 0;
+    int currentQuestion = 0;
+    int numberOfAnswers = 0;
+
     @Autowired
     private DataSource dataSource;
 
@@ -90,6 +95,38 @@ public class JDBCRepository implements QuizRepository{
         }
         return null;
     }
+
+    @Override
+    public int setNumberOfConnections(int input) {
+        numberOfConnections += input;
+        return (numberOfConnections);
+    }
+
+    @Override
+    public int getNumberOfConnections() {
+        return numberOfConnections;
+    }
+
+    @Override
+    public int getCurrentQuestion() {
+        return currentQuestion;
+    }   
+
+    @Override
+    public void setCurrentQuestion(int input) {
+        currentQuestion += input;
+    }
+
+    @Override
+    public void setNumberOfAnswers(int input) {
+        numberOfAnswers = input;
+    }
+
+    @Override
+    public int getNumberOfAnswers() {
+        return numberOfAnswers;
+    }
+
     private Quiz resultSetQuiz(ResultSet resultSet) throws SQLException{
         return new Quiz(
                 resultSet.getInt(1),

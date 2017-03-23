@@ -67,10 +67,12 @@ function showQuestion(data) {
     $("#image").attr("src", obj.img_URL);
 }
 function markAnswer(elem){
+    $('table#options th').prop('onclick',null).off('click');
     $( "table#options th").css("background-color","cornflowerblue");
     elem.css("background-color","black");
     var sendVar = elem.attr("value");
     stompClient.send("/app/answer", {}, JSON.stringify({'optionSelected': sendVar, 'playerAlias': alias}));
+
 }
 
 function showAliasList(alias) {
