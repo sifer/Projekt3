@@ -32,7 +32,7 @@ function connect() {
             showQuestion(JSON.parse(data.body).content);
         })
         stompClient.subscribe('/topic/aliases', function (alias) {
-            var a = (alias.body.replace(/[\]"}[{"]/g, '')); 
+            var a = (alias.body.replace(/[\]"}[{"]/g, ''));
             showAliasList(a);
         })
         sendNewAlias(alias);

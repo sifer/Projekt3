@@ -85,21 +85,25 @@ public class QuizController {
             if(questions.get(index).getQuestionID() == answers.get(i).getQuestion_ID()){
                 s += ", \"text"+questionCount+"\": \""+answers.get(i).getText()+"\"";
                 questionCount++;
+                s += ", \"isCorrect\": \"   "+answers.get(i).isCorrect()+"\"";
             }
         }
         s += ", \"img_URL\":\""+questions.get(index).getImg_URL()+"\"";
         s += "}";
+        System.out.println(s);
         return new Content(s);
     }
 
     @MessageMapping("/answer")
     @SendTo("/topic/answers")
     public Content playerAnswered(String message){
+
         ObjectMapper objectMapper = new ObjectMapper();
         objectMapper.configure(MapperFeature.ACCEPT_CASE_INSENSITIVE_PROPERTIES, true);
         try {
             AnswerTemp answerTemp = objectMapper.readValue(message, AnswerTemp.class);
 
+            System.out.println(answerTemp);
             return new Content(answerTemp.toString());
 
         } catch (IOException e) {
