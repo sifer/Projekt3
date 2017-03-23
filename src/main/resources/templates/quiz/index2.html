@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.w3.org/1999/xhtml">
+<!--https://color.adobe.com/pomegranate-explosion-color-theme-7869531/?showPublished=true-->
 <head>
     <title>Hello WebSocket</title>
     <link href="/webjars/bootstrap/css/bootstrap.min.css" rel="stylesheet"/>
@@ -13,14 +14,17 @@
 <noscript><h2 style="color: #ff0000">Seems your browser doesn't support Javascript! Websocket relies on Javascript being
     enabled. Please enable
     Javascript and reload this page!</h2></noscript>
+<header>
+
+</header>
 <div id="main-content" class="container">
     <div id="login-content">
          <input id="alias" type="text" for="connect" placeholder="Enter an alias..."></input>
          <button id="connect" type="submit">Connect</button>
     </div>
     <h1 id="question"></h1>
-    <img src="" id="image"/>
-    <table id="aliases"></table>
+    <iframe src="" id="image"/>
+
     <table id="options" style="display: none">
       <tr>
         <th id="options1" value="1">Option 1</th>
@@ -31,9 +35,7 @@
         <th id="options4"  value="4">Option 4</th>
       </tr>
     </table>
-    <div id="otherPlayers">
-
-    </div>
+    <div id="aliases"></div>
 </div>
 </body>
 </html>
