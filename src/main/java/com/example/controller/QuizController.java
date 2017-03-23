@@ -9,6 +9,7 @@ import org.jboss.logging.Message;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.handler.annotation.SendTo;
+import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.servlet.ModelAndView;
@@ -29,6 +30,10 @@ public class QuizController {
     ArrayList<Answer> answers;
     ArrayList<Player> playerList = new ArrayList<>();
     int currentCorrectAnswer = 1;
+    int playersAnswered = 0;
+
+    @Autowired
+    private SimpMessagingTemplate temp;
 
     @Autowired
     DataSource dataSource;
@@ -70,10 +75,18 @@ public class QuizController {
         return playerList;
     }
 
+    public void nextQuestion() {
+        repository.setCurrentQuestion(repository.getCurrentQuestion()+1);
+        this.temp.convertAndSend("/topic/quiz", quizChannel());
+        playersAnswered = 0;
+
+    }
+
     @MessageMapping("/connect")
     @SendTo("/topic/quiz")
     public Content quizChannel(){
-
+        System.out.println("Quizchannel körs");
+        System.out.println("Currentquestion: " + repository.getCurrentQuestion());
         String s = "";
         s = "{\"question\":\""+questions.get(repository.getCurrentQuestion()).getText()+"\"";
         int questionCount = 1;
@@ -89,13 +102,14 @@ public class QuizController {
         }
         s += ", \"img_URL\":\""+questions.get(repository.getCurrentQuestion()).getImg_URL()+"\"";
         s += "}";
-        System.out.println(s);
+
         return new Content(s);
     }
 
     @MessageMapping("/answer")
     @SendTo("/topic/answers")
     public Content playerAnswered(String message){
+        playersAnswered++;
 
         ObjectMapper objectMapper = new ObjectMapper();
         objectMapper.configure(MapperFeature.ACCEPT_CASE_INSENSITIVE_PROPERTIES, true);
@@ -112,10 +126,18 @@ public class QuizController {
                     }
                 }
             }
+            System.out.println(playersAnswered);
+            System.out.println(repository.getNumberOfConnections());
+            if(playersAnswered == repository.getNumberOfConnections()) {
+                nextQuestion();
+            }
                 return new Content(answerTemp.toString());
 
         } catch (IOException e) {
             e.printStackTrace();
+        }
+        if(playersAnswered == repository.getNumberOfConnections()) {
+            nextQuestion();
         }
         return new Content("");
     }
