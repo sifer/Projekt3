@@ -1,11 +1,7 @@
 package com.example.controller;
 
 import com.example.AnswerTemp;
-import com.example.domain.Content;
-import com.example.domain.Answer;
-import com.example.domain.Question;
-import com.example.domain.Quiz;
-import com.example.domain.User;
+import com.example.domain.*;
 import com.example.repository.QuizRepository;
 import com.fasterxml.jackson.databind.MapperFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -31,7 +27,8 @@ public class QuizController {
     ArrayList<Question> questions;
     ArrayList<Quiz> quizzes;
     ArrayList<Answer> answers;
-    ArrayList<String> aliasList = new ArrayList<>();
+    ArrayList<Player> playerList = new ArrayList<>();
+    int currentCorrectAnswer = 1;
 
     @Autowired
     DataSource dataSource;
@@ -68,27 +65,29 @@ public class QuizController {
 */
     @MessageMapping("/alias")
     @SendTo("/topic/aliases")
-    public ArrayList<String> addingAlias(String alias) {
-        aliasList.add(alias);
-        return aliasList;
+    public ArrayList<Player> addingAlias(String alias) {
+        playerList.add(new Player(alias, 0));
+        return playerList;
     }
 
     @MessageMapping("/connect")
     @SendTo("/topic/quiz")
     public Content quizChannel(){
+
         String s = "";
-        int index = 0;
-        s = "{\"question\":\""+questions.get(index).getText()+"\"";
+        s = "{\"question\":\""+questions.get(repository.getCurrentQuestion()).getText()+"\"";
         int questionCount = 1;
         for(int i=0; i<answers.size(); i++){
-
-            if(questions.get(index).getQuestionID() == answers.get(i).getQuestion_ID()){
-                s += ", \"text"+questionCount+"\": \""+answers.get(i).getText()+"\"";
+            if(questions.get(repository.getCurrentQuestion()).getQuestionID() == answers.get(i).getQuestion_ID()) {
+                s += ", \"text" + questionCount + "\": \"" + answers.get(i).getText() + "\"";
+                if (answers.get(i).isCorrect()) {
+                    currentCorrectAnswer = questionCount;
+                }
                 questionCount++;
-                s += ", \"isCorrect\": \"   "+answers.get(i).isCorrect()+"\"";
             }
+            //s += ", \"isCorrect\": \"   "+answers.get(i).isCorrect()+"\"";
         }
-        s += ", \"img_URL\":\""+questions.get(index).getImg_URL()+"\"";
+        s += ", \"img_URL\":\""+questions.get(repository.getCurrentQuestion()).getImg_URL()+"\"";
         s += "}";
         System.out.println(s);
         return new Content(s);
@@ -102,9 +101,18 @@ public class QuizController {
         objectMapper.configure(MapperFeature.ACCEPT_CASE_INSENSITIVE_PROPERTIES, true);
         try {
             AnswerTemp answerTemp = objectMapper.readValue(message, AnswerTemp.class);
-
             System.out.println(answerTemp);
-            return new Content(answerTemp.toString());
+            if(answerTemp.getOptionSelected() == currentCorrectAnswer){
+                System.out.println(answerTemp.getPlayerAlias()+" has answered correctly");
+                for(int i=0; i<playerList.size();i++){
+                    if(playerList.get(i).getAlias().equalsIgnoreCase(answerTemp.getPlayerAlias())){
+                        playerList.get(i).setScore(playerList.get(i).getScore()+1);
+                        System.out.println(playerList.get(i).getScore());
+                        break;
+                    }
+                }
+            }
+                return new Content(answerTemp.toString());
 
         } catch (IOException e) {
             e.printStackTrace();
