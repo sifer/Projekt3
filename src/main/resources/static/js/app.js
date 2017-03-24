@@ -1,5 +1,6 @@
 var stompClient = null;
 var alias = null;
+
 function setConnected(connected) {
     $("#connect").prop("disabled", connected);
     $("#disconnect").prop("disabled", !connected);
@@ -30,7 +31,7 @@ function connect() {
         stompClient.subscribe('/topic/quiz', function (data){
             console.log("det här kördes");
             showQuestion(JSON.parse(data.body).content);
-        })
+            })
         stompClient.subscribe('/topic/aliases', function (alias) {
             var a = (alias.body.replace(/[\]"}[{"]/g, ''));
             showAliasList(a);
@@ -41,12 +42,17 @@ function connect() {
     });
 }
 
+
 function disconnect() {
     if (stompClient != null) {
         stompClient.disconnect();
     }
     setConnected(false);
     console.log("Disconnected");
+}
+
+function showNextQuestion() {
+    stompClient.send("/app/connect",{} )
 }
 
 function sendName() {
@@ -56,6 +62,7 @@ function showGreeting(message) {
 }
 function showAnswer(message) {
     $("#otherPlayers").append("<tr><td>" + message + "</td></tr>");
+
 }
 function showQuestion(data) {
     var obj = JSON.parse(data);
@@ -65,13 +72,18 @@ function showQuestion(data) {
     $("th#options3").html(obj.text3);
     $("th#options4").html(obj.text4);
     $("#image").attr("src", obj.img_URL);
+    $("table#options th").css("background-color", "cornflowerblue");
+    $("table#options th").removeAttr('disabled');
+
+
 }
 function markAnswer(elem){
-    $('table#options th').prop('onclick',null).off('click');
+   /* $('table#options th').prop('onclick',null).off('click');*/
     $( "table#options th").css("background-color","cornflowerblue");
     elem.css("background-color","black");
     var sendVar = elem.attr("value");
     stompClient.send("/app/answer", {}, JSON.stringify({'optionSelected': sendVar, 'playerAlias': alias}));
+
 
 }
 
@@ -89,7 +101,14 @@ $(function () {
     $( "#connect" ).click(function() { connect()});
     $( "#disconnect" ).click(function() { disconnect(); });
     $( "#send" ).click(function() { sendName(); });
-    $( "table#options th" ).click(function() { markAnswer($(this)); });
+    $( "table#options th" ).click(function() {
+        if ($('table#options th').attr('disabled') == "disabled" )
+            return false;
+        else {
+            markAnswer($(this));
+            $("table#options th").attr('disabled', "disabled");
+        }
+        });
 
 });
 

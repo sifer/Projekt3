@@ -49,7 +49,7 @@ public class JDBCRepository implements QuizRepository{
     public List<Question> getQuestions() {
         try(Connection conn = dataSource.getConnection();
             Statement statement = conn.createStatement();
-            ResultSet resultSet = statement.executeQuery("SELECT QuestionID, Text, Img_URL, Quiz_ID FROM Question")){
+            ResultSet resultSet = statement.executeQuery("SELECT QuestionID, Text, Img_URL, Quiz_ID FROM Question WHERE Quiz_ID = 15")){
             ArrayList<Question> questions = new ArrayList<>();
             while(resultSet.next()){
                 questions.add(resultSetQuestion(resultSet));
