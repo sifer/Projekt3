@@ -31,11 +31,14 @@ function connect() {
         stompClient.subscribe('/topic/quiz', function (data){
             console.log("det här kördes");
             showQuestion(JSON.parse(data.body).content);
-            })
+            });
         stompClient.subscribe('/topic/aliases', function (alias) {
             var a = (alias.body.replace(/[\]"}[{"]/g, ''));
             showAliasList(a);
-        })
+        });
+        stompClient.subscribe('/topic/results', function() {
+            showResults();
+            });
         sendNewAlias(alias);
         stompClient.send("/app/connect",{}, "connected");
 
@@ -74,9 +77,16 @@ function showQuestion(data) {
     $("#image").attr("src", obj.img_URL);
     $("table#options th").css("background-color", "cornflowerblue");
     $("table#options th").removeAttr('disabled');
-
-
 }
+
+function showResults() {
+    console.log("ShowResults");
+    $("#results").show();
+    $("#options").hide();
+    $("#image").attr("src", "");
+    $("#question").hide();
+}
+
 function markAnswer(elem){
    /* $('table#options th').prop('onclick',null).off('click');*/
     $( "table#options th").css("background-color","cornflowerblue");

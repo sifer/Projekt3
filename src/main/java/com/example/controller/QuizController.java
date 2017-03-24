@@ -31,6 +31,7 @@ public class QuizController {
     ArrayList<Player> playerList = new ArrayList<>();
     int currentCorrectAnswer = 1;
     int playersAnswered = 0;
+    int i1 = 0;
 
     @Autowired
     private SimpMessagingTemplate temp;
@@ -76,18 +77,26 @@ public class QuizController {
     }
 
     public void nextQuestion() {
-        repository.setCurrentQuestion(repository.getCurrentQuestion()+1);
-        this.temp.convertAndSend("/topic/quiz", quizChannel());
-        playersAnswered = 0;
 
+        repository.setCurrentQuestion(repository.getCurrentQuestion()+1);
+
+            this.temp.convertAndSend("/topic/quiz", quizChannel());
+            playersAnswered = 0;
+            i1++;
+
+    }
+    public void showResults(Content content) {
+        System.out.println("showResults");
+        this.temp.convertAndSend("/topic/results", content);
     }
 
     @MessageMapping("/connect")
     @SendTo("/topic/quiz")
     public Content quizChannel(){
-        System.out.println("Quizchannel körs");
+        if(questions.size() != repository.getCurrentQuestion()) {
         System.out.println("Currentquestion: " + repository.getCurrentQuestion());
         String s = "";
+
         s = "{\"question\":\""+questions.get(repository.getCurrentQuestion()).getText()+"\"";
         int questionCount = 1;
         for(int i=0; i<answers.size(); i++){
@@ -98,12 +107,15 @@ public class QuizController {
                 }
                 questionCount++;
             }
-            //s += ", \"isCorrect\": \"   "+answers.get(i).isCorrect()+"\"";
         }
         s += ", \"img_URL\":\""+questions.get(repository.getCurrentQuestion()).getImg_URL()+"\"";
         s += "}";
 
+
         return new Content(s);
+    }
+    showResults(new Content(""));
+    return new Content("");
     }
 
     @MessageMapping("/answer")
@@ -126,18 +138,15 @@ public class QuizController {
                     }
                 }
             }
-            System.out.println(playersAnswered);
-            System.out.println(repository.getNumberOfConnections());
+
             if(playersAnswered == repository.getNumberOfConnections()) {
                 nextQuestion();
             }
-                return new Content(answerTemp.toString());
+            return new Content(answerTemp.toString());
+
 
         } catch (IOException e) {
             e.printStackTrace();
-        }
-        if(playersAnswered == repository.getNumberOfConnections()) {
-            nextQuestion();
         }
         return new Content("");
     }
