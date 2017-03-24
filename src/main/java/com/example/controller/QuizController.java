@@ -52,23 +52,13 @@ public class QuizController {
         quizzes = (ArrayList<Quiz>) repository.getQuizes();
         answers = (ArrayList<Answer>) repository.getAnswers();
     }
-/*    @GetMapping("")
-    public ModelAndView startPage(){
-        return new ModelAndView("quiz/index");
-    }*/
+
     @GetMapping("/2")
     public ModelAndView page2(){
         return new ModelAndView("quiz/index2");
     }
 
 
-/*
-    @MessageMapping("/hello")
-    @SendTo("/topic/greetings")
-    public String messageSender(String message) throws Exception {
-        return (message.toString());
-    }
-*/
     @MessageMapping("/alias")
     @SendTo("/topic/aliases")
     public ArrayList<Player> addingAlias(String alias) {
