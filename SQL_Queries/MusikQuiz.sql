@@ -1,0 +1,124 @@
+------SELECT * FROM QUESTION
+
+----INSERT INTO QUESTION ([Text], Quiz_ID, Img_URL)
+----VALUES ('Hur ofta säger dom blue i denna låt?', 15, 'https://www.youtube.com/embed/68ugkg9RePc')
+--INSERT INTO ANSWER ([Text], IsCorrect, Question_ID)
+--VALUES ('26','1','8')
+--INSERT INTO ANSWER ([Text], IsCorrect, Question_ID)
+--VALUES ('2','0','8')
+--INSERT INTO ANSWER ([Text], IsCorrect, Question_ID)
+--VALUES ('20','0','8')
+--INSERT INTO ANSWER ([Text], IsCorrect, Question_ID)
+--VALUES ('15','0','8')
+--UPDATE dbo.QUESTION
+--SET Img_URL='https://www.youtube.com/embed/68ugkg9RePc?autoplay=1'
+--WHERE QuestionID=8;
+
+----INSERT INTO QUESTION ([Text], Quiz_ID, Img_URL)
+----VALUES ('I hur många länder har denna låt varit listetta?', 15, 'https://www.youtube.com/embed/d73tiBBzvFM?autoplay=1')
+--INSERT INTO ANSWER ([Text], IsCorrect, Question_ID)
+--VALUES ('1','0','9')
+--INSERT INTO ANSWER ([Text], IsCorrect, Question_ID)
+--VALUES ('16','1','9')
+--INSERT INTO ANSWER ([Text], IsCorrect, Question_ID)
+--VALUES ('10','0','9')
+--INSERT INTO ANSWER ([Text], IsCorrect, Question_ID)
+--VALUES ('7','0','9')
+
+----INSERT INTO QUESTION ([Text], Quiz_ID, Img_URL)
+----VALUES ('Duon Nordman (Håkan Hemlin och Mats Wester) upplöstes år 1998, varför?', 15, 'https://www.youtube.com/embed/nqE8Um9t8CU')
+--INSERT INTO ANSWER ([Text], IsCorrect, Question_ID)
+--VALUES ('Dom började bråka','0','16')
+--INSERT INTO ANSWER ([Text], IsCorrect, Question_ID)
+--VALUES ('En av dom valde att gå solo','0','16')
+--INSERT INTO ANSWER ([Text], IsCorrect, Question_ID)
+--VALUES ('Mats träffade sin fru Matilda och dom startade en duo istället','0','16')
+--INSERT INTO ANSWER ([Text], IsCorrect, Question_ID)
+--VALUES ('Håkan knarkade för mycket','1','16')
+--UPDATE dbo.QUESTION
+--SET Img_URL='https://www.youtube.com/embed/nqE8Um9t8CU?autoplay=1', 
+--WHERE QuestionID=16;
+UPDATE QUESTION
+SET [Text]='Denna duo upplöstest 1998, varför?'
+WHERE QuestionID=16;
+
+UPDATE Answer
+SET [Text]='Dom fick slut på låtidéer'
+WHERE AnswerID=27;
+
+UPDATE Answer
+SET [Text]='Den ena knarkade för mycket'
+WHERE AnswerID=28;
+
+----INSERT INTO QUESTION ([Text], Quiz_ID, Img_URL)
+----VALUES ('Vilken grammis vann denna låt?', 15, 'https://www.youtube.com/embed/WXLd_Q8--V4?autoplay=1')
+--INSERT INTO ANSWER ([Text], IsCorrect, Question_ID)
+--VALUES ('Årets låt','1','11')
+--INSERT INTO ANSWER ([Text], IsCorrect, Question_ID)
+--VALUES ('Årets album','0','11')
+--INSERT INTO ANSWER ([Text], IsCorrect, Question_ID)
+--VALUES ('Årets bästa video','0','11')
+--INSERT INTO ANSWER ([Text], IsCorrect, Question_ID)
+--VALUES ('Årets nykomling','0','11')
+
+----INSERT INTO QUESTION ([Text], Quiz_ID, Img_URL)
+----VALUES ('Var föddes Thomas Ledin?', 15, 'https://www.youtube.com/embed/JqmSP0Y3JtU?autoplay=1')
+--INSERT INTO ANSWER ([Text], IsCorrect, Question_ID)
+--VALUES ('Malmö','0','12')
+--INSERT INTO ANSWER ([Text], IsCorrect, Question_ID)
+--VALUES ('Östersund','1','12')
+--INSERT INTO ANSWER ([Text], IsCorrect, Question_ID)
+--VALUES ('Gislaved','0','12')
+--INSERT INTO ANSWER ([Text], IsCorrect, Question_ID)
+--VALUES ('Stockholm','0','12')
+--UPDATE dbo.QUESTION
+--SET [Text]='Var föddes denna artist?'
+--WHERE QuestionID=12;
+
+----INSERT INTO QUESTION ([Text], Quiz_ID, Img_URL)
+----VALUES ('Vad är GES ett akronym för?', 15, 'https://www.youtube.com/embed/VCIW9F4KvFg?autoplay=1')
+--INSERT INTO ANSWER ([Text], IsCorrect, Question_ID)
+--VALUES ('Deras fruars förnamn','0','17')
+--INSERT INTO ANSWER ([Text], IsCorrect, Question_ID)
+--VALUES ('Deras efternamn','1','17')
+--INSERT INTO ANSWER ([Text], IsCorrect, Question_ID)
+--VALUES ('Deras förnamn','0','17')
+--INSERT INTO ANSWER ([Text], IsCorrect, Question_ID)
+--VALUES ('Deras hemorter','0','17')
+
+----INSERT INTO QUESTION ([Text], Quiz_ID, Img_URL)
+----VALUES ('Vilket land bidrog med denna i Eurovision Song Contest 2000?', 15, 'https://www.youtube.com/embed/1xROvbWV-nA')
+--INSERT INTO ANSWER ([Text], IsCorrect, Question_ID)
+--VALUES ('Island','0','14')
+--INSERT INTO ANSWER ([Text], IsCorrect, Question_ID)
+--VALUES ('Danmark','1','14')
+--INSERT INTO ANSWER ([Text], IsCorrect, Question_ID)
+--VALUES ('Storbritannien','0','14')
+--INSERT INTO ANSWER ([Text], IsCorrect, Question_ID)
+--VALUES ('Belgien','0','14')
+--UPDATE dbo.QUESTION
+--SET Img_URL='https://www.youtube.com/embed/1xROvbWV-nA?autoplay=1'
+--WHERE QuestionID=14;
+
+
+----INSERT INTO QUESTION ([Text], Quiz_ID, Img_URL)
+----VALUES ('Vilket land kommer Leila K ifrån?', 15, 'https://www.youtube.com/embed/Jl_5NHTvDAI')
+--INSERT INTO ANSWER ([Text], IsCorrect, Question_ID)
+--VALUES ('Tyskland','0','15')
+--INSERT INTO ANSWER ([Text], IsCorrect, Question_ID)
+--VALUES ('Iran','0','15')
+--INSERT INTO ANSWER ([Text], IsCorrect, Question_ID)
+--VALUES ('Italien','0','15')
+--INSERT INTO ANSWER ([Text], IsCorrect, Question_ID)
+--VALUES ('Sverige','1','15')
+--UPDATE dbo.QUESTION
+--SET Img_URL='https://www.youtube.com/embed/Jl_5NHTvDAI?autoplay=1'
+--WHERE QuestionID=15;
+--UPDATE dbo.QUESTION
+--SET [Text]='Vilket land kommer denna artist ifrån?'
+--WHERE QuestionID=15;
+
+
+
+
+SELECT * FROM Answer
