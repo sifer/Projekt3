@@ -10,6 +10,9 @@
 --VALUES ('20','0','8')
 --INSERT INTO ANSWER ([Text], IsCorrect, Question_ID)
 --VALUES ('15','0','8')
+--UPDATE dbo.QUESTION
+--SET Img_URL='https://www.youtube.com/embed/68ugkg9RePc?autoplay=1'
+--WHERE QuestionID=8;
 
 ----INSERT INTO QUESTION ([Text], Quiz_ID, Img_URL)
 ----VALUES ('I hur många länder har denna låt varit listetta?', 15, 'https://www.youtube.com/embed/d73tiBBzvFM?autoplay=1')
@@ -32,6 +35,20 @@
 --VALUES ('Mats träffade sin fru Matilda och dom startade en duo istället','0','16')
 --INSERT INTO ANSWER ([Text], IsCorrect, Question_ID)
 --VALUES ('Håkan knarkade för mycket','1','16')
+--UPDATE dbo.QUESTION
+--SET Img_URL='https://www.youtube.com/embed/nqE8Um9t8CU?autoplay=1', 
+--WHERE QuestionID=16;
+UPDATE QUESTION
+SET [Text]='Denna duo upplöstest 1998, varför?'
+WHERE QuestionID=16;
+
+UPDATE Answer
+SET [Text]='Dom fick slut på låtidéer'
+WHERE AnswerID=27;
+
+UPDATE Answer
+SET [Text]='Den ena knarkade för mycket'
+WHERE AnswerID=28;
 
 ----INSERT INTO QUESTION ([Text], Quiz_ID, Img_URL)
 ----VALUES ('Vilken grammis vann denna låt?', 15, 'https://www.youtube.com/embed/WXLd_Q8--V4?autoplay=1')
@@ -54,6 +71,9 @@
 --VALUES ('Gislaved','0','12')
 --INSERT INTO ANSWER ([Text], IsCorrect, Question_ID)
 --VALUES ('Stockholm','0','12')
+--UPDATE dbo.QUESTION
+--SET [Text]='Var föddes denna artist?'
+--WHERE QuestionID=12;
 
 ----INSERT INTO QUESTION ([Text], Quiz_ID, Img_URL)
 ----VALUES ('Vad är GES ett akronym för?', 15, 'https://www.youtube.com/embed/VCIW9F4KvFg?autoplay=1')
@@ -76,6 +96,9 @@
 --VALUES ('Storbritannien','0','14')
 --INSERT INTO ANSWER ([Text], IsCorrect, Question_ID)
 --VALUES ('Belgien','0','14')
+--UPDATE dbo.QUESTION
+--SET Img_URL='https://www.youtube.com/embed/1xROvbWV-nA?autoplay=1'
+--WHERE QuestionID=14;
 
 
 ----INSERT INTO QUESTION ([Text], Quiz_ID, Img_URL)
@@ -88,8 +111,14 @@
 --VALUES ('Italien','0','15')
 --INSERT INTO ANSWER ([Text], IsCorrect, Question_ID)
 --VALUES ('Sverige','1','15')
+--UPDATE dbo.QUESTION
+--SET Img_URL='https://www.youtube.com/embed/Jl_5NHTvDAI?autoplay=1'
+--WHERE QuestionID=15;
+--UPDATE dbo.QUESTION
+--SET [Text]='Vilket land kommer denna artist ifrån?'
+--WHERE QuestionID=15;
 
 
 
 
-SELECT * FROM QUESTION
+SELECT * FROM Answer

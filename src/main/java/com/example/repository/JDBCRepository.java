@@ -114,7 +114,7 @@ public class JDBCRepository implements QuizRepository{
 
     @Override
     public void setCurrentQuestion(int input) {
-        currentQuestion += input;
+        currentQuestion = input;
     }
 
     @Override
